@@ -8,13 +8,15 @@
 import SwiftUI
 
 struct ContentView: View {
+    @StateObject var resetter = ResetObservable(false)
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        ScrollView {
+            OuterView()
         }
+        .font(.system(size: 15)).foregroundColor(.white)
+        .environmentObject(resetter)
+        .frame(alignment: .topLeading)
         .padding()
     }
 }
