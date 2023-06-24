@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @StateObject var resetter = ResetObservable(false)
+    @StateObject var resetter = ResetObservable()
     
     var body: some View {
         ScrollView {

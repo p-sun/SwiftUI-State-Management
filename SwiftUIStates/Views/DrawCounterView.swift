@@ -9,22 +9,13 @@ import SwiftUI
 
 fileprivate class DrawCounter: ObservableObject {
     var current: Int = 0
-    var lastResetCounter = false
-
-    func reset() {
-        current = 0
-    }
 }
 
 class ResetObservable: ObservableObject, Equatable {
-    @Published var current: Bool
-    
-    init(_ current: Bool = false) {
-        self.current = current
-    }
-    
-    func needsReset() {
-        print("ResetObservable needsReset()")
+    @Published var current: Bool = false
+        
+    func sendReset() {
+        print("ResetObservable sendReset()")
         self.current = !current
     }
     
@@ -36,7 +27,7 @@ class ResetObservable: ObservableObject, Equatable {
 struct DrawCounterView<Content>: View where Content: View {    
     @StateObject private var counter = DrawCounter()
     @ViewBuilder private let content: Content
-    @EnvironmentObject private var dirtyFlag: ResetObservable
+    @EnvironmentObject private var resetter: ResetObservable
 
     private let title: String
 
@@ -46,14 +37,7 @@ struct DrawCounterView<Content>: View where Content: View {
     }
     
     var body: some View {
-
-        if (dirtyFlag.current != counter.lastResetCounter) {
-            let _ = counter.reset()
-            let _ = counter.lastResetCounter = dirtyFlag.current
-        }
-
         let _ = counter.current += 1
-
         let h = Double(counter.current) / 10.0 + 0.2;
         let color = Color(hue: h, saturation: 0.7, brightness: 0.4)
 
@@ -62,10 +46,12 @@ struct DrawCounterView<Content>: View where Content: View {
             Text("Draws: \(counter.current)")
             content
         }
+        .onReceive(resetter.$current) { _ in
+            counter.current = 0
+        }
         .padding()
         .border(.black, width: 6)
         .background(color)
-        
     }
 }
 

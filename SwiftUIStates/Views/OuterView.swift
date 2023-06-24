@@ -19,7 +19,7 @@ struct OuterView: View {
         stateB.current = 0
         stateC.current = 0
         stateD.current = "0"
-        resetter.needsReset()
+        resetter.sendReset()
     }
     
     var body: some View {
