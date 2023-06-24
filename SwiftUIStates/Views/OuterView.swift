@@ -49,8 +49,12 @@ struct OuterView: View {
             }
             
             HStack {
-                ViewAB("🍎 ViewAB(stateA: stateA)", stateA: stateA)
-                ViewAB("🍎 ViewAB(stateA: nil)", stateA: nil)
+                ViewA("🍎 ViewA(stateA)", myInt: stateA)
+                ViewA("ViewA(nil)", myInt: nil)
+            }
+            HStack {
+                ViewB("ViewB()")
+                ViewB("ViewB()")
             }
             HStack {
                 ViewC("🐱 ViewC(stateC)", stateC: stateC)

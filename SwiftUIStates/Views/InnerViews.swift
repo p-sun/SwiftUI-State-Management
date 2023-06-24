@@ -6,22 +6,39 @@
 //
 
 import SwiftUI
-struct ViewAB: View {
+struct ViewA: View {
     private let title: String
     // Cannot mutate this w/o @State, since struct is immutable
-    private let stateA: Int?
-    @EnvironmentObject private var stateB: Counter
+    private let myInt: Int?
     @State private var forceUpdate: Int = 0
 
-    init(_ title: String, stateA: Int?) {
+    init(_ title: String, myInt: Int?) {
         self.title = title
-        self.stateA = stateA
+        self.myInt = myInt
     }
     
     var body: some View {
         DrawCounterView(title) {
-            let stateAStr = "let stateA = \(stateA != nil ? String(stateA!) : "nil")"
-            Text(stateAStr)
+            let str = "let myInt = \(myInt != nil ? String(myInt!) : "nil")"
+            Text(str)
+            Button("Update \(forceUpdate)") {
+                forceUpdate += 1
+            }.buttonStyle(.borderedProminent)
+        }
+    }
+}
+
+struct ViewB: View {
+    private let title: String
+    @EnvironmentObject private var stateB: Counter
+    @State private var forceUpdate: Int = 0
+
+    init(_ title: String) {
+        self.title = title
+    }
+    
+    var body: some View {
+        DrawCounterView(title) {
             Button("🐝 @EnvironmentObject var stateB = \(stateB.current)") {
                 stateB.current += 1
             }.buttonStyle(.borderedProminent)
@@ -62,7 +79,7 @@ struct ViewD: View {
     
     var body: some View {
         DrawCounterView(title) {
-            Button("🐱 @ObservedObject var stateD = \"\(stateD.current)\"") {
+            Button("🐶 @ObservedObject var stateD = \"\(stateD.current)\"") {
                 stateD.addOne()
             }.buttonStyle(.borderedProminent)
         }
@@ -99,7 +116,7 @@ struct ViewG: View {
 
 struct ViewH: View {
     private let title: String
-    @ObservedObject private var stateG = Counter()
+    @ObservedObject private var stateJ = Counter()
     @State private var forceUpdate: Int = 0
     
     init(_ title: String) {
@@ -108,8 +125,8 @@ struct ViewH: View {
     
     var body: some View {
         DrawCounterView(title + "\nstateG = Counter()") {
-            Button("🦒 @ObservedObject var stateG = \(stateG.current)") {
-                stateG.current += 1
+            Button("🦒 @ObservedObject var stateG = \(stateJ.current)") {
+                stateJ.current += 1
             }.background(.secondary).buttonStyle(.bordered)
             
             Button("Update \(forceUpdate)") {
@@ -121,6 +138,6 @@ struct ViewH: View {
 
 struct InnerView_Previews: PreviewProvider {
     static var previews: some View {
-        ViewAB("ViewAB", stateA: 9).environmentObject(Counter())
+        ViewA("ViewAB", myInt: 9).environmentObject(Counter())
     }
 }
