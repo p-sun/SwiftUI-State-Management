@@ -63,7 +63,7 @@ struct ViewD: View {
     var body: some View {
         DrawCounterView(title) {
             Button("🐱 @ObservedObject var stateD = \"\(stateD.current)\"") {
-                stateD.current = String(Int(stateD.current)! + 1)
+                stateD.addOne()
             }.buttonStyle(.borderedProminent)
         }
     }

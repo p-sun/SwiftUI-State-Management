@@ -42,7 +42,7 @@ struct OuterView: View {
                 }.buttonStyle(.borderedProminent)
                 
                 Button("🐶 @StateObject var stateD: \nStringCounter = \"\(stateD.current)\"") {
-                    stateD.current = String(Int(stateD.current)! + 1)
+                    stateD.addOne()
                 }.buttonStyle(.borderedProminent)
                 
                 Spacer()

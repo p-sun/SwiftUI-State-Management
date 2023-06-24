@@ -28,4 +28,8 @@ class StringCounter: ObservableObject {
     init(_ current: Int = 0) {
         self.current = "\(current)"
     }
+    
+    func addOne() {
+        current = String(Int(current)! + 1)
+    }
 }
