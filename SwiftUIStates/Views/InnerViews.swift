@@ -10,7 +10,6 @@ struct ViewA: View {
     private let title: String
     // Cannot mutate this w/o @State, since struct is immutable
     private let myInt: Int?
-    @State private var forceUpdate: Int = 0
 
     init(_ title: String, myInt: Int?) {
         self.title = title
@@ -21,9 +20,6 @@ struct ViewA: View {
         DrawCounterView(title) {
             let str = "let myInt = \(myInt != nil ? String(myInt!) : "nil")"
             Text(str)
-            Button("Update \(forceUpdate)") {
-                forceUpdate += 1
-            }.buttonStyle(.borderedProminent)
         }
     }
 }
